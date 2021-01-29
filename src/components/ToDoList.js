@@ -10,13 +10,19 @@ import {
 } from 'reactstrap'
 
 import Menu from './Menu'
-import Table from './Table'
+import { Table as BootstrapTable } from 'reactstrap'
+
+import EmptyTable from './EmptyTable'
+import If from './If'
 
 class TodoList extends Component {
 
     state = {
         task: '',
-        tasks: []
+        tasks: [
+            "teste 1",
+            "teste 2"
+        ]
     }
 
     render() {
@@ -39,7 +45,31 @@ class TodoList extends Component {
                             <Button color="success" data-cy="btn-add" onClick={ this.add }>Adicionar</Button>
                         </InputGroupAddon>
                     </InputGroup>
-                    <Table tasks={ tasks }/>
+                    <BootstrapTable className="mt-5" data-ty="table-tasks">
+                        <thead data-cy="table-tasks-header">
+                            <tr>
+                                <th data-cy="tasks-tasks-column-tarefa">Tarefa</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody data-cy="table-tasks-body">
+                            <If condition={ this.state.tasks.length } el={ <EmptyTable/> }>
+                                { tasks.map((task, index) => 
+                                    <tr data-cy="table-tasks-row" key={ index }>
+                                        <td data-cy={`table-tasks-${task}`}>{ task }</td>
+                                        <td><button data-cy={`btn-remove-${index}`} onClick={() => {
+                                            this.setState({
+                                                tasks: this.state.tasks.filter((_, indexItem)=>{
+                                                    return index != indexItem;
+                                                })
+                                            })  
+                                        }}>Excluir</button></td>
+                                    </tr>
+                                ) }
+                            </If>
+                        </tbody>
+                    </BootstrapTable>
+
                 </Container>
             </Fragment>
         )

@@ -12,9 +12,18 @@ const Table = ({ tasks }) => (
         <thead data-cy="table-tasks-header">
             <tr>
                 <th data-cy="tasks-tasks-column-tarefa">Tarefa</th>
+                <th>Ações</th>
             </tr>
         </thead>
         <tbody data-cy="table-tasks-body">
+            <tr>
+                <td>Teste 1</td>
+                <td><button id="excluir">Excluir</button></td>
+            </tr>
+            <tr>
+                <td>Teste 2</td>
+                <td><button id="excluir">Excluir</button></td>
+            </tr>
             <If condition={ tasks.length } el={ <EmptyTable/> }>
                 { tasks.map((task, index) => 
                     <tr data-cy="table-tasks-row" key={ index }>
